@@ -3,11 +3,14 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from openaq_py import OpenAQ
 
+
+# Create app and DataBase
 APP = Flask(__name__)
 APP.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
 DB = SQLAlchemy(APP)
 
 
+# Table for database to store retrieved data
 class Record(DB.Model):
     id = DB.Column(DB.Integer, primary_key=True)
     datetime = DB.Column(DB.String(25))
@@ -18,6 +21,10 @@ class Record(DB.Model):
 
 
 def get_utc_values(city, parameter):
+    """
+    Function for pulling in data from api
+    
+    Returns tuple of datetime and value"""
     api = OpenAQ()
     status, body = api.measurements(city=city, parameter=parameter)
     datetimes = []
@@ -31,6 +38,7 @@ def get_utc_values(city, parameter):
     return records
 
 
+# Route to home page
 @APP.route('/')
 def root():
     """Base View."""
@@ -38,6 +46,7 @@ def root():
     return render_template('home.html', records=records)
 
 
+# route to refresh page for cleaning and reestablishing just LA in db
 @APP.route('/refresh')
 def refresh():
     """Pull fresh data from Open AQ and replace existing data"""
