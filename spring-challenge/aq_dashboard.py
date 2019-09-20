@@ -1,5 +1,5 @@
 """OpenAQ Air Quality Dashboard with Flask"""
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from openaq_py import OpenAQ
 

@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/home/jay/.local/share/virtualenvs/spring-challenge-U2ItJgI8/bin/python",
+    "python.linting.pylintEnabled": false,
+    "python.linting.pep8Enabled": true,
+    "python.linting.enabled": true
+}
