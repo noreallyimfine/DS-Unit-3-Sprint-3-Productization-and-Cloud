@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>LA (Chile) Air Quality</title>
+
+  <link rel="stylesheet" href="static/main.css">
+
+</head>
+
+<body>
+  {% block content %}
+  <div class="text-center">
+  {% for record in records %}
+        <li>{{record}}</li>
+        </br>
+  {% endfor %}
+  </div>
+  {% endblock %}
+</body>
+</html>
