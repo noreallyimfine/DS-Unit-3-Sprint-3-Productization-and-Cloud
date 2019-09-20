@@ -23,7 +23,6 @@ class Record(DB.Model):
 def get_utc_values(city, parameter):
     """
     Function for pulling in data from api
-    
     Returns tuple of datetime and value"""
     api = OpenAQ()
     status, body = api.measurements(city=city, parameter=parameter)
@@ -42,8 +41,13 @@ def get_utc_values(city, parameter):
 @APP.route('/')
 def root():
     """Base View."""
-    records = Record.query.filter(Record.value >= 10).all()
-    return render_template('home.html', records=records)
+    if not DB.engine.dialect.has_table(DB.engine, 'record'):
+        DB.create_all()
+        records = []
+        return render_template('home.html', records=records)
+    else:
+        records = Record.query.filter(Record.value >= 10).all()
+        return render_template('home.html', records=records)
 
 
 # route to refresh page for cleaning and reestablishing just LA in db
